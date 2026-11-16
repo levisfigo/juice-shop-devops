@@ -1,0 +1,18 @@
+groups:
+  - name: juice-shop
+    rules:
+      - alert: HighCPU
+        expr: rate(process_cpu_seconds_total{job="juice-shop"}[1m]) > 0.8
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Juice Shop CPU above 80%"
+
+      - alert: JuiceShopDown
+        expr: up{job="juice-shop"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Juice Shop is down"
